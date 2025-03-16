@@ -1,10 +1,14 @@
 import { useContext } from "react"
 import { ProducerContext } from "../context/producer.context"
 import { Producer } from "../types/producer";
+import { useHttp } from "../custom-hooks/useHttp";
 
 export const AddProducer = () => {
 
-    const producer = useContext(ProducerContext);
+    const { data, error, isLoading, request } = useHttp('/producer', 'post');
+    //const producer = useContext(ProducerContext);
+    const { refresh } = useContext(ProducerContext);
+
     const submit = async (event: any) => {
         event.preventDefault();
         const newProducer: Producer = {
@@ -14,7 +18,8 @@ export const AddProducer = () => {
             phone: event.target.phone.value,
             events: event.target.events.value,
         }
-       // await request(newProducer);
+        await request(newProducer);
+        refresh!();
     }
     return (<>
         <form onSubmit={submit}>
@@ -22,5 +27,8 @@ export const AddProducer = () => {
             <input type="text" placeholder="name" />
             <input type="email" placeholder="email" />
             <input type="text" placeholder="phone" />
-        </form>    </>)
+            <button disabled={isLoading}>add</button>
+        </form>
+        {error && <span>{error}</span>}
+    </>)
 }

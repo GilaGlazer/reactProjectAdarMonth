@@ -1,9 +1,13 @@
 import { useContext } from "react"
 import { EventContext } from "../context/event.context";
 import {Event} from '../types/event'
+import { useHttp } from "../custom-hooks/useHttp";
 export const AddEvent = () => {
 
-    const event = useContext(EventContext);
+    const { data, error, isLoading, request } = useHttp('/events', 'post');
+    const { refresh } = useContext(EventContext);
+
+   // const event = useContext(EventContext);
     const submit = async (event:any) => {
         event.preventDefault();
         const newEvent:Event = {
@@ -13,7 +17,8 @@ export const AddEvent = () => {
             date: event.target.date.value,
             producerId: event.target.producerId.value
         }
-       // await request(newEvent);
+       await request(newEvent);
+       refresh!();
     }
     return (<>
         <form onSubmit={submit}>
@@ -22,5 +27,8 @@ export const AddEvent = () => {
             <input type="text" placeholder="description" />
             <input type="text" placeholder="date" />
             <input type="text" placeholder="producerId" />
-        </form>    </>)
+            <button disabled={isLoading}>add</button>
+        </form>   
+        { error &&  <span>{error}</span>}
+        </>)
 }

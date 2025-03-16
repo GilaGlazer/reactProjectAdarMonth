@@ -5,7 +5,8 @@ import ProducerEventDetails from './producerEventDetails';
 export const ProducerEventList = (props: any) => {
     const { id } = props;
     const selectEvents = useContext(EventContext);
-
+    if(!Array.isArray(selectEvents))
+        return <p>have no events</p>
     return (
         <>
             <ul>

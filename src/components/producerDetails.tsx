@@ -2,9 +2,13 @@ import React, { useContext } from 'react';
 import { ProducerContext } from '../context/producer.context';
 import ProducerEventDetails from './producerEventDetails';
 import ProducerEventList from './producerEventList';
+import { useHttp } from '../custom-hooks/useHttp';
 
 export const ProducerDetails = () => {
-    const { selectedProducer } = useContext(ProducerContext);
+      const { selectedProducer } = useContext(ProducerContext);
+      const { data, error, isLoading, request } = useHttp('/producer', 'put');
+      const { refresh } = useContext(ProducerContext);
+
     return (
         <>
             <div>
