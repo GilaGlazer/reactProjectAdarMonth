@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ProducerContext } from '../context/producer.context';
 import ProducerEventDetails from './producerEventDetails';
+import ProducerEventList from './producerEventList';
 
 export const ProducerDetails = () => {
     const { selectedProducer } = useContext(ProducerContext);
@@ -11,7 +12,9 @@ export const ProducerDetails = () => {
                 <p>name producer{selectedProducer?.name}</p>
                 <p>email{selectedProducer?.email}</p>
                 <p>phone{selectedProducer?.phone}</p>
-                {selectedProducer?.events?.length? (
+                <ProducerEventList producerId={selectedProducer?.id}/>
+
+                {/* {selectedProducer?.events?.length? (
                     <ul>
                         {selectedProducer?.events.map((event, index) => (
                             <li key={index}>
@@ -21,7 +24,8 @@ export const ProducerDetails = () => {
                     </ul>
                 ) : (
                     <p>have no events</p>
-                )}            </div>
+                )}           */}
+            </div>
         </>
     )
 }

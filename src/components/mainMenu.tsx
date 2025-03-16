@@ -1,13 +1,15 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 
-export const MainMenu = ()=>{
-    return(
-    <>
-        <div>
-            <button>כניסת מפיקה</button>
-            <button>כניסת משתמש</button>
-        </div>
-    </>
+export const MainMenu = () => {
+    return (
+        <>
+            <div>
+                <NavLink to="/">home</NavLink><br />
+                <NavLink to="/user">user</NavLink><br />
+                <NavLink to="/producer">producer</NavLink>
+            </div>
+        </>
     )
 }
 export default MainMenu;
