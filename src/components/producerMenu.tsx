@@ -6,7 +6,7 @@ export const ProducerMenu = () => {
         <>
             <div>
                 <NavLink to="/exist-producer">sign in</NavLink><br />
-                <NavLink to="/add-producer">sign up</NavLink>
+                <NavLink to="/producers/sign-up">sign up</NavLink>
             </div>
         </>
     )

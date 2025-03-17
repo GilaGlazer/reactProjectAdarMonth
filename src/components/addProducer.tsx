@@ -4,29 +4,32 @@ import { Producer } from "../types/producer";
 import { useHttp } from "../custom-hooks/useHttp";
 
 export const AddProducer = () => {
-
-    const { data, error, isLoading, request } = useHttp('/producer', 'post');
+    const { data, error, isLoading, request } = useHttp('/producers', 'post');
     //const producer = useContext(ProducerContext);
     const { refresh } = useContext(ProducerContext);
 
     const submit = async (event: any) => {
         event.preventDefault();
         const newProducer: Producer = {
-            id: event.target.id.value,
             name: event.target.name.value,
             email: event.target.email.value,
             phone: event.target.phone.value,
-            events: event.target.events.value,
         }
-        await request(newProducer);
-        refresh!();
+        try {
+            await request(newProducer);
+            refresh!();
+            event.target.reset();
+        } catch (error) {
+            console.log(error);
+            
+        }
+
     }
     return (<>
         <form onSubmit={submit}>
-            <input type="text" placeholder="id" />
-            <input type="text" placeholder="name" />
-            <input type="email" placeholder="email" />
-            <input type="text" placeholder="phone" />
+            <input type="text" name="name" placeholder="name" />
+            <input type="email" name="email" placeholder="email" />
+            <input type="text" name="phone" placeholder="phone" />
             <button disabled={isLoading}>add</button>
         </form>
         {error && <span>{error}</span>}

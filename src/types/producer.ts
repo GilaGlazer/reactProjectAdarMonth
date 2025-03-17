@@ -1,5 +1,5 @@
 export type Producer = {
-    _id:String,
+    _id?:String,
     name:String,
     email:String,
     phone:String,

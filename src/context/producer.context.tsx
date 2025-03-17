@@ -4,10 +4,9 @@ import { useHttp } from "../custom-hooks/useHttp";
 
 type ProducerContextType = {
     producers: Producer[],
-    selectedProducer: Producer | null,
+    // selectedProducer: Producer | null,
     updateProducer: (id: string, newProducer: Producer) => void;
     refresh: () => Promise<unknown>
-    
 }
 export const ProducerContext = createContext<Partial<ProducerContextType>>({});
 
@@ -17,23 +16,24 @@ export const ProducerProvider = (props: any) => {
 
     // הגדרת הסטייטים
     const [producers, setProducers] = useState<Producer[]>([]);
-    //const [selectedProducer, setSelectedProducer] = useState<Producer | null>(null);
+    const [selectedProducer, setSelectedProducer] = useState<Producer | null>(null);
 
     // פונקציה לעדכון מפיקה
     const updateProducer = (id: string, newProducer: Producer) => {
         setProducers((prevProducers) =>
             prevProducers?.map((producer) =>
-                producer.id === id ? newProducer : producer
+                producer._id === id ? newProducer : producer
             )
         );
     };
+    
     // פונקציה לרענון הנתונים
     const refresh = async () => {
         await request();
     };
-     // פונקציה לבחירת מפיקה
-     const selectProducer = (id: string) => {
-        const producer = producers.find(p => p.id === id);
+    // פונקציה לבחירת מפיקה
+    const selectProducer = (id: string) => {
+        const producer = producers.find(p => p._id === id);
         setSelectedProducer(producer || null);
     };
 
@@ -41,7 +41,7 @@ export const ProducerProvider = (props: any) => {
         producers,
         updateProducer,
         refresh
-        selectedProducer: 
+        //selectedProducer: 
     }
 
     // החזרת הקונטקסט עם הערכים המתאימים

@@ -20,8 +20,8 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/user" element={<EventDetailsForUser />} />
-            <Route path="/producer" element={<ProducerMenu/>} />
-            <Route path="/add-producer" element={<AddProducer />} />
+            <Route path="/producers" element={<ProducerMenu/>} />
+            <Route path="/producers/sign-up" element={<AddProducer />} />
             <Route path="/exist-producer" element={<ProducerDetails />} />
           </Routes>
           </ProducerProvider>

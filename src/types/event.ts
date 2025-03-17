@@ -1,5 +1,5 @@
 export type Event = {
-    _id:String,
+    _id?:String,
     name:String,
     descreption?:String,
     date:String,

@@ -7,7 +7,7 @@ export const MainMenu = () => {
             <div>
                 <NavLink to="/">home</NavLink><br />
                 <NavLink to="/user">user</NavLink><br />
-                <NavLink to="/producer">producer</NavLink>
+                <NavLink to="/producers">producer</NavLink>
             </div>
         </>
     )
