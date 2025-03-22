@@ -1,13 +1,21 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 export const MainMenu = () => {
+
+    const location = useLocation();
+
     return (
         <>
+
             <div>
                 <NavLink to="/">home</NavLink><br />
-                <NavLink to="/user">user</NavLink><br />
-                <NavLink to="/producers">producer</NavLink>
+                {location.pathname === "/" && (
+                    <>
+                        <NavLink to="/user">user</NavLink><br />
+                        <NavLink to="/producers">producer</NavLink>
+                    </>
+                )}
             </div>
         </>
     )

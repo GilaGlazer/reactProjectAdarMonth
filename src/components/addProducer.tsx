@@ -5,7 +5,6 @@ import { useHttp } from "../custom-hooks/useHttp";
 
 export const AddProducer = () => {
     const { data, error, isLoading, request } = useHttp('/producers', 'post');
-    //const producer = useContext(ProducerContext);
     const { refresh } = useContext(ProducerContext);
 
     const submit = async (event: any) => {
@@ -17,11 +16,11 @@ export const AddProducer = () => {
         }
         try {
             await request(newProducer);
-            refresh!();
+           // await new Promise(res => setTimeout(res, 500)); // מחכה חצי שנייה לפני הרענון
+          //  refresh!();
             event.target.reset();
         } catch (error) {
-            console.log(error);
-            
+            console.log(error); 
         }
 
     }

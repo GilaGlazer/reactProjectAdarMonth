@@ -17,20 +17,20 @@ export const useHttp = <T,>(url: string, method: HttpMethod) => {
     const request = useCallback(async (...params: any[]) => {
         setIsloading(true);
         setError('');
+        console.log('Requesting:', method, url, params);
         try {
-            const result = await Instance[method]<T>(url,...params);
-        //    console.log('Full response:', result); // הדפיס את התשובה כולה
-           // console.log('Data:', result.data); // הדפיס את הנתונים שמתקבלים
+            const result = await Instance[method]<T>(url, ...params);
+            console.log('Full response:', result); // הדפסת התגובה
+            console.log('Data:', result.data); // הדפסת הנתונים שמתקבלים
             setIsloading(false);
             setData(result.data);
-            //setData(result.data.producer);
-
         } catch (error) {
-           // console.error('Error fetching data:', error); // הדפס את השגיאה
+            console.error('Error fetching data:', error); // הדפס את השגיאה
             setIsloading(false);
             setError(`error while fetching data ${error}`);
         }
-    },[])
+    }, []);
+    
 
     // useEffect(()=>{
     //     if(method=='get')

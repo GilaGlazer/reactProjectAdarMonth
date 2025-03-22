@@ -29,7 +29,8 @@ export const ProducerProvider = (props: any) => {
     
     // פונקציה לרענון הנתונים
     const refresh = async () => {
-        await request();
+        const response=await request();
+        console.log("Data after refresh:", response);
     };
     // פונקציה לבחירת מפיקה
     const selectProducer = (id: string) => {

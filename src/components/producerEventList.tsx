@@ -1,22 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { EventContext } from '../context/event.context';
-import ProducerEventDetails from './producerEventDetails';
+import { useHttp } from '../custom-hooks/useHttp';
+import { NavLink } from 'react-router-dom';
 
-export const ProducerEventList = (props: any) => {
-    const { id } = props;
-    const selectEvents = useContext(EventContext);
-    if(!Array.isArray(selectEvents))
-        return <p>have no events</p>
+export const ProducerEventList = (producerId: any) => {
+
+    const [idEvent, setIdEvent] = useState('');
+    const { refresh } = useContext(EventContext);
+
+    const { data: events, error: eventsError, isLoading: eventsLoading, request: requestGetAllEvents } = useHttp<Event>('/events', 'get');
+    const { error: deleteEventError, isLoading: deleteEventLoading, request: requestDeleteEvent } = useHttp(`/events/${idEvent}`, 'delete');
+
+    useEffect(() => {
+        if (producerId)
+            requestGetAllEvents();
+    }, [producerId, requestGetAllEvents])
+
+    const deleteFunc = async (eventId: any) => {
+        setIdEvent(eventId);
+        await requestDeleteEvent();
+       // refresh!();
+        setIdEvent('');
+    }
     return (
         <>
+            {eventsLoading && <p>Loading events...</p>}
+            {eventsError && <p>Error loading events: {eventsError}</p>}
             <ul>
-                {selectEvents
-                    .filter((e: { producerId: any; }) => e.producerId === id)
-                    .map((e: any, index: React.Key | null | undefined) => (
-                        <li key={index}>
-                            <ProducerEventDetails event={e} />
-                        </li>
-                    ))}
+                {Array.isArray(events) &&
+                    events
+                        .filter(event => event.producerId === producerId)
+                        .map(event =>
+                            <li key={event._id}>
+                                <NavLink to={`/events/${event._id}`}>
+                                    {event.name}
+                                </NavLink>
+                                <button onClick={() => deleteFunc(event._id)}>delete</button>
+                                {deleteEventError && <p>{deleteEventError}</p>}
+                            </li>
+                        )
+                }
             </ul>
         </>
     )

@@ -1,22 +1,29 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ProducerContext } from '../context/producer.context';
 import { useHttp } from '../custom-hooks/useHttp';
 import { Producer } from '../types/producer';
+import { NavLink, useParams } from 'react-router-dom';
+import { Event } from '../types/event'
+import ProducerEventList from './producerEventList';
+import { AddEvent } from './addEvent';
 
 export const ProducerDetails = () => {
-    const [emailInput, setEmailInput] = useState('');
+    const { email } = useParams();
     const [update, setUpdate] = useState(false);
 
-    const { data: producer, error: fetchError, isLoading: fetchLoading, request: fetchProducer } = useHttp<Producer>('/producers', 'get');
-    const { error: updateError, isLoading: updateLoading, request: updateProducer } = useHttp<Producer>(`/producers/${emailInput}`, 'put');
+    const { data: producer, error: errorProducer, isLoading: isLoadingProducer, request: requestGetProducerByEmail } = useHttp<Producer>(`/producers/${email}`, 'get');
+    const { error: updateError, isLoading: updateLoading, request: requestUpdateProducer } = useHttp<Producer>(`/producers/${email}`, 'put');
 
     const { refresh } = useContext(ProducerContext);
 
-    const submit = async (e: any) => {
-        e.preventDefault();
-        if (emailInput)
-            await fetchProducer(`/${emailInput}`);
-    };
+    useEffect(() => {
+        if (email)
+            try {
+                requestGetProducerByEmail();
+            } catch (error) {
+                console.log(error);
+            }
+    }, [email, requestGetProducerByEmail])
 
     const submitUpdate = async (event: any) => {
         event.preventDefault();
@@ -26,36 +33,20 @@ export const ProducerDetails = () => {
             phone: event.target.phone.value,
         };
 
-        await updateProducer(updatedProducer);
+        await requestUpdateProducer(updatedProducer);
         refresh!();
         setUpdate(false);
     };
 
     return (
         <>
-            <form onSubmit={submit}>
-                <input
-                    type="email"
-                    name="email"
-                    value={emailInput}
-                    placeholder="email"
-                    onChange={(e) => setEmailInput(e.target.value)}
-                />
-                <button disabled={fetchLoading}>Search</button>
-            </form>
-
-            {fetchLoading && <p>Loading...</p>}
-            {fetchError && <p>{fetchError}</p>}
-
             {producer && (
+                //  הצגת פרטי המפיק וארועיו
                 <div>
-                    <p>id: {producer._id}</p>
                     <p>name: {producer.name}</p>
                     <p>email: {producer.email}</p>
                     <p>phone: {producer.phone}</p>
-
                     <button onClick={() => setUpdate(true)}>Update</button>
-
                     {update && (
                         <form onSubmit={submitUpdate}>
                             <input type="text" name="name" placeholder="name" />
@@ -65,6 +56,10 @@ export const ProducerDetails = () => {
                             {updateError && <p>{updateError}</p>}
                         </form>
                     )}
+
+                    <ProducerEventList element={producer._id} />
+
+                    <button onClick={() => <AddEvent />}>add event</button>
                 </div>
             )}
         </>

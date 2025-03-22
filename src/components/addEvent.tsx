@@ -6,8 +6,6 @@ export const AddEvent = () => {
 
     const { data, error, isLoading, request } = useHttp('/events', 'post');
     const { refresh } = useContext(EventContext);
-
-   // const event = useContext(EventContext);
     const submit = async (event:any) => {
         event.preventDefault();
         const newEvent:Event = {
@@ -16,11 +14,11 @@ export const AddEvent = () => {
             producerId: event.target.producerId.value
         }
        await request(newEvent);
-       refresh!();
+       //refresh!();
     }
     return (<>
         <form onSubmit={submit}>
-            <input type="email" placeholder="name" />
+            <input type="text" placeholder="name" />
             <input type="text" placeholder="date" />
             <input type="text" placeholder="producerId" />
             <button disabled={isLoading}>add</button>
