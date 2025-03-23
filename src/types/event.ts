@@ -3,5 +3,5 @@ export type Event = {
     name:String,
     descreption?:String,
     date:String,
-    producerId:String
+    producerEmail:String
 }

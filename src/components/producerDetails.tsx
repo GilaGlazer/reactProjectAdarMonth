@@ -11,6 +11,9 @@ export const ProducerDetails = () => {
     const { email } = useParams();
     const [update, setUpdate] = useState(false);
 
+    const [addEvent, setAddEvent] = useState(false);
+
+
     const { data: producer, error: errorProducer, isLoading: isLoadingProducer, request: requestGetProducerByEmail } = useHttp<Producer>(`/producers/${email}`, 'get');
     const { error: updateError, isLoading: updateLoading, request: requestUpdateProducer } = useHttp<Producer>(`/producers/${email}`, 'put');
 
@@ -32,10 +35,14 @@ export const ProducerDetails = () => {
             email: event.target.email.value,
             phone: event.target.phone.value,
         };
+        try {
+            await requestUpdateProducer(updatedProducer);
+            refresh!();
+            setUpdate(false);
+        } catch (error) {
+            console.log(error);
+        }
 
-        await requestUpdateProducer(updatedProducer);
-        refresh!();
-        setUpdate(false);
     };
 
     return (
@@ -57,9 +64,11 @@ export const ProducerDetails = () => {
                         </form>
                     )}
 
-                    <ProducerEventList element={producer._id} />
+                    <ProducerEventList element={producer.email} />
 
-                    <button onClick={() => <AddEvent />}>add event</button>
+                    <button onClick={() => setAddEvent(true)}>add event</button>
+                    {addEvent &&
+                        <AddEvent />}
                 </div>
             )}
         </>

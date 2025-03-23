@@ -21,7 +21,7 @@ export const ProducerEventDetails = () => {
             name: event.target.name.value,
             date: event.target.date.value,
             descreption: event.target.descreption.value,
-            producerId: event.target.producerId.value
+            producerEmail: event.target.producerEmail.value
         }
         await updateEvent(updatedEvent);
        // refresh!();
@@ -37,14 +37,14 @@ export const ProducerEventDetails = () => {
                     <p><strong>name:</strong> {event.name}</p>
                     <p><strong>date:</strong> {event.date}</p>
                     <p><strong>description:</strong> {event.descreption}</p>
-                    <p><strong>producerId:</strong> {event.producerId}</p>
+                    <p><strong>producerId:</strong> {event.producerEmail}</p>
                     <button onClick={(e) => setUpdate(true)}>update</button>
                     {update && (
                         <form onSubmit={submitUpdate}>
                             <input type="text" name="name" placeholder="name" />
                             <input type="text" name="date" placeholder="date" />
                             <input type="text" name="descreption" placeholder="descreption" />
-                            <input type="text" name="producerId" placeholder="producerId" />
+                            <input type="text" name="producerId" placeholder="producerEmail" />
                             <button disabled={isLoadingUpdate}>update</button>
                             {errorUpdate && <p>{errorUpdate}</p>}
                         </form>

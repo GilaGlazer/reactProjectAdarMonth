@@ -3,44 +3,53 @@ import { Producer } from "../types/producer";
 import { useHttp } from "../custom-hooks/useHttp";
 
 type ProducerContextType = {
-    producers: Producer[],
+    producer: Producer | undefined,
     // selectedProducer: Producer | null,
-    updateProducer: (id: string, newProducer: Producer) => void;
+    //updateProducer: (id: string, newProducer: Producer) => void;
     refresh: () => Promise<unknown>
 }
 export const ProducerContext = createContext<Partial<ProducerContextType>>({});
 
 export const ProducerProvider = (props: any) => {
+    const [producer, setProducer] = useState<Producer>();
+    console.log(`Requesting producer with ID: ${producer?._id}`);
 
-    const { data, error, isLoading, request } = useHttp<Producer[]>('/producers', 'get');
+    const { data, error, isLoading, request } = useHttp<Producer>(`/producers/${producer?._id}`, 'get');
 
     // הגדרת הסטייטים
-    const [producers, setProducers] = useState<Producer[]>([]);
-    const [selectedProducer, setSelectedProducer] = useState<Producer | null>(null);
+    //const [selectedProducer, setSelectedProducer] = useState<Producer | null>(null);
 
-    // פונקציה לעדכון מפיקה
-    const updateProducer = (id: string, newProducer: Producer) => {
-        setProducers((prevProducers) =>
-            prevProducers?.map((producer) =>
-                producer._id === id ? newProducer : producer
-            )
-        );
-    };
-    
-    // פונקציה לרענון הנתונים
+    // // פונקציה לעדכון מפיקה
+    // const updateProducer = (id: string, newProducer: Producer) => {
+    //     setProducers((prevProducers) =>
+    //         prevProducers?.map((producer) =>
+    //             producer._id === id ? newProducer : producer
+    //         )
+    //     );
+    // };
+
     const refresh = async () => {
-        const response=await request();
-        console.log("Data after refresh:", response);
+        if (!producer?._id) return; // אם אין ID, לא נבצע רענון
+        try {
+            await request();
+            if (data) {
+                setProducer(data);  // עדכון הסטייט עם המפיק החדש
+            }
+        } catch (error) {
+            console.log("Error while refreshing producer", error);
+        }
     };
-    // פונקציה לבחירת מפיקה
-    const selectProducer = (id: string) => {
-        const producer = producers.find(p => p._id === id);
-        setSelectedProducer(producer || null);
-    };
+
+
+    // // פונקציה לבחירת מפיקה
+    // const selectProducer = (id: string) => {
+    //     const producer = producers.find(p => p._id === id);
+    //     setSelectedProducer(producer || null);
+    // };
 
     const contextValue: ProducerContextType = {
-        producers,
-        updateProducer,
+        producer,
+        //updateProducer,
         refresh
         //selectedProducer: 
     }

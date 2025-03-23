@@ -3,7 +3,7 @@ import { EventContext } from '../context/event.context';
 import { useHttp } from '../custom-hooks/useHttp';
 import { NavLink } from 'react-router-dom';
 
-export const ProducerEventList = (producerId: any) => {
+export const ProducerEventList = (producerEmail: any) => {
 
     const [idEvent, setIdEvent] = useState('');
     const { refresh } = useContext(EventContext);
@@ -12,9 +12,9 @@ export const ProducerEventList = (producerId: any) => {
     const { error: deleteEventError, isLoading: deleteEventLoading, request: requestDeleteEvent } = useHttp(`/events/${idEvent}`, 'delete');
 
     useEffect(() => {
-        if (producerId)
+        if (producerEmail)
             requestGetAllEvents();
-    }, [producerId, requestGetAllEvents])
+    }, [producerEmail, requestGetAllEvents])
 
     const deleteFunc = async (eventId: any) => {
         setIdEvent(eventId);
@@ -29,7 +29,7 @@ export const ProducerEventList = (producerId: any) => {
             <ul>
                 {Array.isArray(events) &&
                     events
-                        .filter(event => event.producerId === producerId)
+                        .filter(event => event.producerEmail === producerEmail)
                         .map(event =>
                             <li key={event._id}>
                                 <NavLink to={`/events/${event._id}`}>
