@@ -1,0 +1,61 @@
+body {
+    background-color: #f4f4f9;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* מאפשר למרכז את התוכן על כל גובה המסך */
+}
+
+.producer-menu {
+    background-color: #333;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.producer-menu a,
+.producer-menu button {
+    color: #fff;
+    font-size: 22px;
+    margin: 15px 0; /* רווח בין הקישורים/כפתורים */
+    padding: 15px 30px;
+    background-color: #444;
+    border-radius: 5px;
+    display: block;
+    width: 200px;
+    text-align: center;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.producer-menu a:hover,
+.producer-menu button:hover {
+    background-color: #555;
+    color: #ff6347;
+    transform: scale(1.1);
+}
+
+.producer-menu input {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    width: 220px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.producer-menu form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

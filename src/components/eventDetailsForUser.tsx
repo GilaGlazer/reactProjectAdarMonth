@@ -17,7 +17,6 @@ export const EventDetailsForUser = () => {
             {error && <p>Error: {error}</p>}
             {event ? (
                 <div>
-                    <p><strong>id:</strong> {event._id}</p>
                     <p><strong>name:</strong> {event.name}</p>
                     <p><strong>date:</strong> {event.date}</p>
                     <p><strong>description:</strong> {event.descreption}</p>

@@ -23,12 +23,12 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/user" element={<EventListForUserWithSearch />} />
-            <Route path="/user/:id" element={<EventDetailsForUser />} />
+            <Route path="/user/events/:id" element={<EventDetailsForUser />} />
             <Route path="/producers" element={<ProducerMenu/>} />
             <Route path="/producers/sign-up" element={<AddProducer />} />
             <Route path="/producers/sign-in/:email" element={<ProducerDetails />} />
           {/* //  <Route path="/producers/sign-in/:email" element={<AddEvent />} /> */}
-            <Route path="/events/:id" element={<ProducerEventDetails />} />
+            <Route path="/producers/sign-in/:email/:id" element={<ProducerEventDetails />} />
           </Routes>
           </ProducerProvider>
       </EventProvider>

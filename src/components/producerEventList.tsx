@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { EventContext } from '../context/event.context';
 import { useHttp } from '../custom-hooks/useHttp';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
-export const ProducerEventList = (producerEmail: any) => {
+export const ProducerEventList = () => {
+    const {email} = useParams();
 
     const [idEvent, setIdEvent] = useState('');
     const { refresh } = useContext(EventContext);
@@ -12,16 +13,22 @@ export const ProducerEventList = (producerEmail: any) => {
     const { error: deleteEventError, isLoading: deleteEventLoading, request: requestDeleteEvent } = useHttp(`/events/${idEvent}`, 'delete');
 
     useEffect(() => {
-        if (producerEmail)
+        if (email) {
             requestGetAllEvents();
-    }, [producerEmail, requestGetAllEvents])
+        }
+    }, [email, requestGetAllEvents])
 
-    const deleteFunc = async (eventId: any) => {
-        setIdEvent(eventId);
-        await requestDeleteEvent();
-       // refresh!();
-        setIdEvent('');
-    }
+    const deleteFunc = async (eventId: string) => {
+        
+        await setIdEvent(eventId);
+        try {
+            await requestDeleteEvent();  // שלח את הבקשה עם ה- URL המלא
+            //refresh!(); // רענן את רשימת האירועים אחרי מחיקה
+            setIdEvent('');
+        } catch (error) {
+            console.error("Error deleting event:", error);
+        }
+    };
     return (
         <>
             {eventsLoading && <p>Loading events...</p>}
@@ -29,10 +36,10 @@ export const ProducerEventList = (producerEmail: any) => {
             <ul>
                 {Array.isArray(events) &&
                     events
-                        .filter(event => event.producerEmail === producerEmail)
+                        .filter(event => event.producerEmail === email)
                         .map(event =>
                             <li key={event._id}>
-                                <NavLink to={`/events/${event._id}`}>
+                                <NavLink to={`/producers/sign-in/${email}/${event._id}`}>
                                     {event.name}
                                 </NavLink>
                                 <button onClick={() => deleteFunc(event._id)}>delete</button>

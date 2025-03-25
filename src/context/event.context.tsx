@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { Event } from '../types/event'
 import { useHttp } from "../custom-hooks/useHttp";
 
@@ -13,25 +13,29 @@ export const EventContext = createContext<Partial<EventContextType>>({});
 export const EventProvider = (props: any) => {
 
     const { data, error, isLoading, request } = useHttp<Event[]>('/events', 'get');
-
-    const [events, setEvents] = useState<Event[]>([]); // סוג של מערך אירועים או undefined
+    const [events, setEvents] = useState<Event[]>([]);
     //const [selectedEvent, setSelectedEvent] = useState<Event | null>(null); // סוג של Event או null
 
     // // פונקציה לעדכון ארוע
     // const updateEvent = (id: string, newEvent: Event) => {
     //     setEvents((prevEvents) =>
     //         prevEvents?.map((event) =>
-    //             event.id === id ? newEvent : event
+    //             event._id === id ? newEvent : event
     //         )
     //     );
     // };
-     // פונקציה לרענון הנתונים
+    // פונקציה לרענון הנתונים
     const refresh = async () => {
         const response = await request(); // קריאה ל-API
         if (response!=null) {
-            setEvents(response); // עדכון ה-state עם התשובה שהתקבלה
+            setEvents(response); // עדכון הסטייט עם הנתונים החדשים
         }
     };
+    // useEffect(() => {
+    //     if (data) {
+    //         setEvents(data); // אם יש נתונים, עדכן את הסטייט
+    //     }
+    // }, [data]);
 
     const contextValue: EventContextType = {
         events,
@@ -43,7 +47,7 @@ export const EventProvider = (props: any) => {
         <EventContext.Provider value={contextValue}>
             {isLoading && 'Loading...'}
             {error && error}
-            {!error && props.children}        
+            {!error && props.children}
         </EventContext.Provider>
     );
 }

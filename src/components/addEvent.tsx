@@ -15,7 +15,7 @@ export const AddEvent = () => {
         }
         try {
             await request(newEvent);
-            //refresh!();
+            //await refresh!();
             event.target.reset();
         } catch (error) {
             console.log(error);

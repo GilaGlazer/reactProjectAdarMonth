@@ -26,16 +26,19 @@ export const useHttp = <T,>(url: string, method: HttpMethod) => {
             setData(result.data);
         } catch (error) {
             console.error('Error fetching data:', error); // הדפס את השגיאה
-            setIsloading(false);
+            //setIsloading(false);
             setError(`error while fetching data ${error}`);
         }
-    }, []);
-    
+        finally {
+            setIsloading(false); // זה יבטיח שהמצב מתעדכן גם במקרה של שגיאה
+        }
+    }, [method, url]);
+
 
     // useEffect(()=>{
     //     if(method=='get')
     //         request();
     // },[]);
 
-    return {isLoading , error, data , request};
+    return { isLoading, error, data, request };
 }

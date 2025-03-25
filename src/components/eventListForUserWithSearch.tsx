@@ -27,7 +27,7 @@ export const EventListForUserWithSearch = () => {
                         .filter(event => event.name.toLowerCase().includes(search.toLowerCase()))
                         .map(event =>
                             <li key={event._id}>
-                                <NavLink to={`/events/${event._id}`}>
+                                <NavLink to={`/user/events/${event._id}`}>
                                     {event.name}
                                 </NavLink>
                             </li>
