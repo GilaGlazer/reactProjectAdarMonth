@@ -1,0 +1,63 @@
+/* עיצוב כללי לדף פרטי האירוע */
+.event-details {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+    width: 100%; /* Match the width of other components */
+    max-width: 800px; /* Limit the maximum width */
+    margin: 20px auto; /* Add consistent spacing */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.event-details h1 {
+    font-size: 36px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* עיצוב לפרטי האירוע */
+.event-details p {
+    font-size: 18px;
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.event-details p strong {
+    color: #555;
+}
+
+/* עיצוב טקסט טעינה וטעויות */
+.loading-text,
+.error-text {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.loading-text {
+    color: #ff6347;
+}
+
+.error-text {
+    color: #d32f2f;
+}
+
+/* Media Queries להסתגלות למסכים קטנים יותר */
+@media (max-width: 768px) {
+    .event-details {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .event-details h1 {
+        font-size: 28px;
+    }
+
+    .event-details p {
+        font-size: 16px;
+    }
+}

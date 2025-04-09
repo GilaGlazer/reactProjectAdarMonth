@@ -1,0 +1,136 @@
+.producer-event-details {
+    background-color: #f4f4f9;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 2%;
+    padding: 20px; /* צמצום הריווח הפנימי */
+    margin-left: 1%;
+    width: 98%; /* הרחבת הרוחב */
+    max-width: 1200px; /* הרחבת רוחב מרבי */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* יישור תכנים מהצד השמאלי */
+    text-align: left; /* יישור טקסט לשמאל */
+}
+
+/* כותרות */
+.producer-event-details h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* פרטי האירוע */
+.producer-event-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* כפתור עדכון */
+.producer-event-details button {
+    background-color: orange;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    width: 250px; /* רוחב יותר לכפתור */
+}
+
+
+
+/* טופס עדכון */
+.producer-event-details form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px; /* הגבלת רוחב הטופס */
+    margin-top: 20px;
+}
+
+/* שדות טופס */
+.producer-event-details input {
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%; /* מותאם למלא את הרוחב */
+    box-sizing: border-box;
+}
+
+/* כפתור בעדכון */
+.producer-event-details form button {
+    background-color: #ff9800;
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 250px; /* רוחב יותר לכפתור */
+}
+
+.producer-event-details form button:hover {
+    background-color: #fb8c00;
+}
+
+/* הודעת שגיאה */
+.producer-event-details .error {
+    color: red;
+    margin-top: 10px;
+}
+
+/* טקסט טעינה */
+.producer-event-details .loading-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff6347;
+}
+
+/* עיצוב רשימת האירועים */
+.event-list-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px; /* הרחבת הרוחב */
+    margin: 20px auto; /* ממורכז */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.event-list-item h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.event-list-item p {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #666;
+}
+
+.event-list-item button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.event-list-item button:hover {
+    background-color: #e53935;
+}

@@ -1,34 +1,38 @@
-import { useContext } from "react"
+import React, { useContext } from "react";
 import { EventContext } from "../context/event.context";
-import { Event } from '../types/event'
+import { Event } from '../types/event';
 import { useHttp } from "../custom-hooks/useHttp";
-export const AddEvent = () => {
+import { useParams } from "react-router-dom";
 
-    const { data, error, isLoading, request } = useHttp('/events', 'post');
+export const AddEvent = () => {
+    const { email } = useParams();
+    const { request } = useHttp('/events', 'post');
     const { refresh } = useContext(EventContext);
+
     const submit = async (event: any) => {
         event.preventDefault();
         const newEvent: Event = {
             name: event.target.name.value,
             date: event.target.date.value,
-            producerEmail: event.target.producerEmail.value
+            producerEmail: email || '',
         }
+
         try {
-            await request(newEvent);
-            //await refresh!();
+            await request(undefined, newEvent);
+            await refresh!();
             event.target.reset();
         } catch (error) {
-            console.log(error);
+            console.log("Error:", error);
         }
     }
-    return (<>
-        <form onSubmit={submit}>
-            {/* <input type="text"  placeholder="name" /> */}
-            <input type="text" name="name" placeholder="name" />
-            <input type="text" name="date" placeholder="date" />
-            <input type="text" name="producerEmail" placeholder="producerEmail" />
-            <button disabled={isLoading}>add</button>
-        </form>
-        {error && <span>{error}</span>}
-    </>)
+
+    return (
+        <>
+            <form onSubmit={submit}>
+                <input type="text" name="name" placeholder="name" required />
+                <input type="datetime-local" name="date" placeholder="date" required />
+                <button type="submit">add event</button>
+            </form>
+        </>
+    );
 }

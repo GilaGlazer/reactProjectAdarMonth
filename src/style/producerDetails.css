@@ -3,28 +3,40 @@
     font-family: 'Arial', sans-serif;
     color: #333;
     margin: 0;
-    padding: 20px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* הוספת הגדרת רוחב 100% */
+    max-width: 100%; /* התאמת הרוחב המקסימלי */
+    margin: auto; /* ממורכז על ידי מרווחים אוטומטיים */
+    line-height: 1.6;
+    direction: ltr; /* יישור התוכן משמאל לימין */
+    text-align: center; /* שינוי יישור הטקסט למרכז */
 }
 
 .producer-details p {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #555;
+    text-align: left; /* יישור טקסט לשמאל */
 }
 
 .producer-details button {
     color: #fff;
     font-size: 22px;
     padding: 15px 30px;
-    background-color: #444;
+    background-color: orange;
     border-radius: 5px;
     display: block;
-    margin-top: 20px;
+    margin: 20px auto;
     cursor: pointer;
     border: none;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: left; /* יישור טקסט למרכז */
 }
 
 .producer-details button:hover {
@@ -34,18 +46,30 @@
 }
 
 .producer-details input {
-    padding: 10px;
+    padding: 20px;
     margin-bottom: 15px;
     font-size: 16px;
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    margin: 15px auto;
+    box-sizing: border-box;
+    text-align: left; /* יישור טקסט לשמאל */
 }
 
 .producer-details form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 500px;
+    text-align: left; /* יישור טקסט לשמאל */
+    padding: 20px; /* הוספת ריווח פנימי */
+    background-color: #fff; /* רקע לבן לטופס */
+    border: 1px solid #ddd; /* מסגרת עדינה */
+    border-radius: 10px; /* פינות מעוגלות */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* הוספת צל */
 }
 
 .producer-details .error {
@@ -58,4 +82,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
+
+.producer-details .add-event-container button {
+    padding: 12px 25px;
+    background-color: #28a745;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.producer-details .add-event-container button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+

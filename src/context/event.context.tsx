@@ -1,53 +1,40 @@
-import { createContext, useEffect, useState } from "react"
-import { Event } from '../types/event'
+import { createContext, useEffect, useState } from "react";
+import { Event } from '../types/event';
 import { useHttp } from "../custom-hooks/useHttp";
 
 type EventContextType = {
-    events: Event[] | undefined,
-    //selectedEvent: Event | null,
-    //updateEvent: (id: string, newEvent: Event) => void;
-    refresh(): Promise<unknown>
+    events: Event[] | undefined;
+    refresh(): Promise<void>;
 }
+
 export const EventContext = createContext<Partial<EventContextType>>({});
 
 export const EventProvider = (props: any) => {
-
     const { data, error, isLoading, request } = useHttp<Event[]>('/events', 'get');
     const [events, setEvents] = useState<Event[]>([]);
-    //const [selectedEvent, setSelectedEvent] = useState<Event | null>(null); // סוג של Event או null
 
-    // // פונקציה לעדכון ארוע
-    // const updateEvent = (id: string, newEvent: Event) => {
-    //     setEvents((prevEvents) =>
-    //         prevEvents?.map((event) =>
-    //             event._id === id ? newEvent : event
-    //         )
-    //     );
-    // };
-    // פונקציה לרענון הנתונים
     const refresh = async () => {
-        const response = await request(); // קריאה ל-API
-        if (response!=null) {
-            setEvents(response); // עדכון הסטייט עם הנתונים החדשים
+        try {
+            const response = await request("/events", "get");
+            if (response!==undefined) {
+                setEvents(response);  // עדכון הסטייט
+            }
+        } catch (error) {
+            console.error('Error refreshing events:', error);
         }
     };
-    // useEffect(() => {
-    //     if (data) {
-    //         setEvents(data); // אם יש נתונים, עדכן את הסטייט
-    //     }
-    // }, [data]);
+
 
     const contextValue: EventContextType = {
         events,
-        //updateEvent,
-        refresh,
-    }
-    // החזרת הקונטקסט עם הערכים המתאימים
+        refresh, 
+    };
+
     return (
         <EventContext.Provider value={contextValue}>
-            {isLoading && 'Loading...'}
-            {error && error}
-            {!error && props.children}
+            {isLoading && <div>Loading...</div>}
+            {error && <div>{error}</div>}
+            {!error && !isLoading && props.children}
         </EventContext.Provider>
     );
-}
+};

@@ -26,6 +26,7 @@ export const ProducerMenu = () => {
             {showInputEmail && (
                 <form onSubmit={submit}>
                     <input
+                        required
                         type="email"
                         name="email"
                         value={emailInput}

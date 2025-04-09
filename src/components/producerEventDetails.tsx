@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useHttp } from '../custom-hooks/useHttp';
 import { Event } from '../types/event';
 import { EventContext } from '../context/event.context';
-
+import '../style/producerEventDetails.css';
 export const ProducerEventDetails = () => {
-    const { id } = useParams();
+    const { id, email } = useParams();
     const { data: event, error, isLoading, request: getById } = useHttp<Event | null>(`/events/${id}`, 'get');
-    const { error: errorUpdate, isLoading: isLoadingUpdate, request: updateEvent } = useHttp(`/events${id}`, 'put');
+    const { error: errorUpdate, isLoading: isLoadingUpdate, request: updateEvent } = useHttp(`/events/${id}`, 'put');
 
     const { refresh } = useContext(EventContext);
     const [update, setUpdate] = useState(false);
@@ -15,45 +15,54 @@ export const ProducerEventDetails = () => {
         if (id)
             getById();
     }, [id, getById])
+
     const submitUpdate = async (event: any) => {
         event.preventDefault();
         const updatedEvent: Event = {
             name: event.target.name.value,
             date: event.target.date.value,
-            descreption: event.target.descreption.value,
-            producerEmail: event.target.producerEmail.value
+            description: event.target.description.value,
+            producerEmail: email || '',
         }
-        await updateEvent(updatedEvent);
-       // refresh!();
-        setUpdate(false);
+        try {
+            await updateEvent(undefined, updatedEvent);
+            await getById();
+            setUpdate(false);
+            event.target.reset();
+        }
+        catch (error) {
+            console.error('Error updating event:', error);
+        }
     }
+
     return (
-        <>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
+        <div className="producer-event-details">
+            {isLoading && <p className="loading-text">Loading...</p>}
+            {error && <p className="error">{error}</p>}
             {event ? (
-                <div>
-                    <p><strong>id:</strong> {event._id}</p>
+                <>
+                    <h1>Event Details</h1>
                     <p><strong>name:</strong> {event.name}</p>
                     <p><strong>date:</strong> {event.date}</p>
-                    <p><strong>description:</strong> {event.descreption}</p>
-                    <p><strong>producerId:</strong> {event.producerEmail}</p>
-                    <button onClick={(e) => setUpdate(true)}>update</button>
+                    <p><strong>description:</strong> {event.description}</p>
+                    <p><strong>producer Email:</strong> {event.producerEmail}</p>
+
+                    {!update && <button onClick={() => setUpdate(true)}>Update</button>}
+
                     {update && (
                         <form onSubmit={submitUpdate}>
-                            <input type="text" name="name" placeholder="name" />
-                            <input type="text" name="date" placeholder="date" />
-                            <input type="text" name="descreption" placeholder="descreption" />
-                            <input type="text" name="producerId" placeholder="producerEmail" />
-                            <button disabled={isLoadingUpdate}>update</button>
-                            {errorUpdate && <p>{errorUpdate}</p>}
+                            <input type="text" name="name" placeholder="Event Name" defaultValue={event.name} required />
+                            <input type="datetime-local" name="date" defaultValue={event.date} required />
+                            <input type="text" name="description" placeholder="Event Description" defaultValue={event.description} />
+                            <button disabled={isLoadingUpdate}>Update Event</button>
+                            {errorUpdate && <p className="error">{errorUpdate}</p>}
                         </form>
                     )}
-                </div>
+                </>
             ) : (
                 <p>Event not found</p>
             )}
-        </>
+        </div>
     );
 };
 

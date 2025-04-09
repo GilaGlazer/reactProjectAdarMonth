@@ -1,0 +1,73 @@
+.producer-event-list {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 40px;
+    max-width: 1000px; /* הגדל את הרוחב של הרשימה */
+    margin: 2% auto;
+    box-shadow: none; /* מסיר את הצללים של הרשימה */
+}
+
+.producer-event-list h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.producer-event-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.producer-event-list li {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px; /* רווח גדול יותר בין כל אירוע */
+    padding: 15px;
+    padding-left: 40px auto;
+    padding-right: 15px     auto;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* הוסף צל קטן לכרטיסים */
+    width: 100%; /* ודא שהכרטיסים תופסים את כל הרוחב של המיכל */
+    max-width: 900px; /* קביעת רוחב מקסימלי לכרטיס */
+    margin-left: auto; /* מיקום מרחק אוטומטי מצד שמאל */
+    margin-right: auto; /* מיקום מרחק אוטומטי מצד ימין */
+}
+
+.producer-event-list li a {
+    color: #444;
+    text-decoration: none;
+    font-size: 18px;
+    flex-grow: 1;
+}
+
+.producer-event-list li button {
+    background-color: #f44336;
+    color: white;
+    font-size: 14px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.producer-event-list li button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.1);
+}
+
+.producer-event-list .loading-text,
+.producer-event-list .error-text {
+    text-align: center;
+    color: #ff6347;
+    font-size: 18px;
+}
+
+.producer-event-list .loading-text {
+    font-size: 20px;
+    font-weight: bold;
+}

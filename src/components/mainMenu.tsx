@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import '../style/mainMenu.css';
-
 export const MainMenu = () => {
 
     const location = useLocation();

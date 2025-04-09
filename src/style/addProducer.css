@@ -6,8 +6,9 @@
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    width: 300px;
-    margin: 0 auto;
+    width: 100%; /* Match the width of other components */
+    max-width: 800px; /* Limit the maximum width */
+    margin: 1% auto; /* Reduce the top margin to move the form higher */
 }
 
 .add-producer-form input {
@@ -24,7 +25,7 @@
     color: #fff;
     font-size: 22px;
     padding: 15px 30px;
-    background-color: #444;
+    background-color: #28a745;
     border-radius: 5px;
     display: block;
     width: 100%;
